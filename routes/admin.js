@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* GET users listing. */
 router.get('/', function(req, res, next) {
   let products=[
     {
@@ -30,8 +30,7 @@ router.get('/', function(req, res, next) {
       Image:"https://m.media-amazon.com/images/I/61D9g9TtnQL._SX679_.jpg"
     }
   ]  
-   //this is passing page to intex hbs
-  res.render('index', { products,admin:false });
+  res.render('admin/view-products',{admin:true,products})
 });
 
 module.exports = router;
