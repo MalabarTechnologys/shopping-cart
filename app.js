@@ -8,7 +8,7 @@ var userRouter = require('./routes/user');
 var adminRouter = require('./routes/admin');
 const {engine : hbs} = require("express-handlebars")
 var app = express();
-
+var fileUpload=require('express-fileupload')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(fileUpload());
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
 
