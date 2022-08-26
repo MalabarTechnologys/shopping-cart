@@ -13,6 +13,7 @@
     "express-handlebars": "^6.0.6",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "mongodb": "^4.9.0",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.19"
   }
