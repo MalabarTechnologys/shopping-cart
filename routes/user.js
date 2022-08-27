@@ -1,38 +1,31 @@
 var express = require('express');
 var router = express.Router();
-
+var productHelpers=require('../helpers/product-helpers')
+const userHelpers=require('../helpers/user-helpers');
+const { response } = require('../app');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let products=[
-    {
-      name:"royal Canin Puppy 1 kg",
-      category:"Dog food",
-      Discription:"Number One Quality",
-      Image:"https://images-eu.ssl-images-amazon.com/images/I/41237jNPwRS._SX300_SY300_QL70_FMwebp_.jpg"
-    },
-    {
-      name:"N & d Puppy 1 kg",
-      category:"Dog food",
-      Discription:"Number One Quality",
-      Image:"https://m.media-amazon.com/images/I/71SWN1UlxjL._SY879_.jpg"
-    },
-    {
-      name:"pedigree pro",
-      category:"Dog food",
-      Discription:"Number One Quality",
-      Image:"https://m.media-amazon.com/images/I/41JzKCYG+SL._SX300_SY300_.jpg"
 
-    },
-    {
-      name:"Drols focus",
-      category:"Dog food",
-      Discription:"Number One Quality",
-      Image:"https://m.media-amazon.com/images/I/61D9g9TtnQL._SX679_.jpg"
-    }
-  ]  
-   //this is passing page to intex hbs
-  res.render('index', { products,admin:false });
+  productHelpers.getAllProducts().then((products)=>{
+    console.log(products)
+    res.render('user/view-products',{products})
+  
+  })
 });
+
+router.get('/login',(req,res)=>{
+  res.render('user/login')
+})
+
+router.get('/signup',(req,res)=>{
+  res.render('user/signup')
+})
+
+router.post('/signup',(req,res)=>{
+    userHelpers.doSignup(req.body).then((response)=>{
+      console.log(response);
+    })
+})
 
 module.exports = router;
 
