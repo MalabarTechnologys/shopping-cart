@@ -21,9 +21,16 @@
       <td>{{this.Category}}</td>
       <td>{{this.Discription}}</td>
       <td><img style="width: 65px;height:55px;" src="/product-images/{{this._id}}.jpg" alt=""></td>
+      <td>
+        <a href="/admin/edit-product" class="btn btn-primary">Edit</a>
+        <a href="/admin/delete-product/{{this._id}}" class="btn btn-danger">Delete</a>
+     
+        
+        </td>
+     
     </tr>
     {{/each}}
-
+   
   
   </tbody>
 </table>
