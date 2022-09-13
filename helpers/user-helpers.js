@@ -45,12 +45,14 @@ module.exports={
         return new Promise(async(resolve,riject)=>{
             let userCart=await db.get().collection(collection.CART_COLLECTION).findOne({user:objectId(userId)})
             if(userCart){
-                  db.get(collection.CART_COLLECTION)
+                //   db.get(collection.CART_COLLECTION)
+                db.get().collection(collection.CART_COLLECTION)
                   .updateOne({user:ObjectId(userId)},
                     
                   {
-                
+                        
                         $push:{products:ObjectId(proId)}
+                    
             
                   }
                   
@@ -67,7 +69,49 @@ module.exports={
                 })
             }
         })
+      },
+      getCartProducts:(userId)=>{
+        return new Promise(async(resolve,riject)=>{
+            let cartItems=await db.get().collection(collection.CART_COLLECTION).aggregate([
+                {
+                    $match:{user:ObjectId(userId)}
+                },
+                {
+                    $lookup:{
+                        from:collection.PRODUCT_COLLECTION,
+                       let:{prodList:'$products'},
+                       pipeline:[
+                        {
+                           $match:{
+                            $expr:{
+                                $in:['$_id',"$$prodList"]
+                            }
+                           }
+                        }
+                       ],
+                       as:'cartItems'
+
+
+                       
+                    }
+                }
+            ]).toArray()
+            resolve(cartItems[0].cartItems)
+        })
+      },
+      getCartCount:(userId)=>{
+        return new Promise(async(resolve,riject)=>{
+            let count=0;
+            let cart=await db.get().collection(collection.CART_COLLECTION).findOne({user:ObjectId(userId)})
+            if(cart){
+                 count=cart.products.length
+            }
+            resolve(count)
+        })
       }
+
+
+
 }
 
 
