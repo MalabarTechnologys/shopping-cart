@@ -3,7 +3,7 @@ var collection=require('../config/collections')
 const bcrypt=require('bcrypt')
 const { response } = require('../app')
 const { ObjectId } = require('mongodb')
-var objectId=require('mongodb').ObjectID
+var objectId=require('mongodb').ObjectId
 
 module.exports={
     doSignup:(userData)=>{
@@ -81,7 +81,7 @@ module.exports={
                 }
             }else{
                 let cartObj={
-                    user:objectId(userId),
+                    user:ObjectId(userId),
                     products:[proObj]
                 }
                 db.get().collection(collection.CART_COLLECTION).insertOne(cartObj).then((response)=>{
@@ -137,7 +137,7 @@ module.exports={
             resolve(count)
         })
     },
-    changeProductQuantity:(details)=>{
+     changeProductQuantity:(details)=>{
       details.count=parseInt(details.count)
       details.quantity= parseInt(details.quantity)
         
